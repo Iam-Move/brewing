@@ -1,8 +1,18 @@
 import React, { useRef } from 'react';
 import { storage } from '../utils/storage';
 
+const CURRENT_VERSION = '1.0.2';
+
 const Settings: React.FC = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [latestVersion, setLatestVersion] = React.useState<string | null>(null);
+
+    React.useEffect(() => {
+        fetch('/version.json?t=' + new Date().getTime())
+            .then(res => res.json())
+            .then(data => setLatestVersion(data.version))
+            .catch(err => console.error('Failed to fetch version:', err));
+    }, []);
 
     const handleBackup = () => {
         const data = storage.exportData();
@@ -42,6 +52,12 @@ const Settings: React.FC = () => {
         reader.readAsText(file);
         // Reset input
         e.target.value = '';
+    };
+
+    const handleForceReload = () => {
+        if (window.confirm('최신 버전을 받아오기 위해 페이지를 새로고침 하시겠습니까?')) {
+            window.location.href = window.location.pathname + '?t=' + new Date().getTime();
+        }
     };
 
     return (
@@ -128,8 +144,33 @@ const Settings: React.FC = () => {
                     />
                 </section>
 
+                {/* 기타 기능 */}
+                <section className="space-y-3">
+                    <h2 className="text-textMain font-bold text-lg">기타</h2>
+                    <button
+                        onClick={handleForceReload}
+                        className="w-full bg-surface hover:bg-surfaceLight p-4 rounded-xl border border-white/5 flex items-center justify-between group"
+                    >
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
+                                <span className="material-symbols-outlined text-green-400 text-[20px]">refresh</span>
+                            </div>
+                            <div className="text-left">
+                                <span className="text-textMain font-bold text-sm flex items-center gap-2">
+                                    업데이트 확인 (새로고침)
+                                    {latestVersion && latestVersion !== CURRENT_VERSION && (
+                                        <span className="bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full animate-pulse">NEW</span>
+                                    )}
+                                </span>
+                                <span className="text-textSub text-xs">최신 버전이 안 보일 때</span>
+                            </div>
+                        </div>
+                        <span className="material-symbols-outlined text-textSub group-hover:text-white">chevron_right</span>
+                    </button>
+                </section>
+
                 <div className="text-center text-textSub/30 text-xs mt-10">
-                    BrewNote v1.0.0
+                    BrewNote v{CURRENT_VERSION} {latestVersion ? `(Server: v${latestVersion})` : ''}
                 </div>
             </div>
         </div>
