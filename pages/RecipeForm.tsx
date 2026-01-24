@@ -8,7 +8,13 @@ const RecipeForm: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const { addRecipe, updateRecipe, recipes } = useData();
 
-    const [formData, setFormData] = useState<Omit<Recipe, 'id' | 'steps'>>({
+    // Form state with number | string to handle empty inputs
+    const [formData, setFormData] = useState<Omit<Recipe, 'id' | 'steps' | 'waterTemp' | 'beanAmount' | 'waterAmount' | 'youtubeStart'> & {
+        waterTemp: number | string;
+        beanAmount: number | string;
+        waterAmount: number | string;
+        youtubeStart?: number | string;
+    }>({
         title: '',
         type: 'Hot',
         roastLevel: ['Medium'],
@@ -43,7 +49,7 @@ const RecipeForm: React.FC = () => {
         setFormData(prev => ({
             ...prev,
             [name]: name === 'waterTemp' || name === 'beanAmount' || name === 'waterAmount' || name === 'youtubeStart'
-                ? Number(value)
+                ? (value === '' ? '' : Number(value))
                 : value
         }));
     };
@@ -87,10 +93,20 @@ const RecipeForm: React.FC = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
+        const submitData: Omit<Recipe, 'id'> = {
+            ...formData,
+            waterTemp: Number(formData.waterTemp),
+            beanAmount: Number(formData.beanAmount),
+            waterAmount: Number(formData.waterAmount),
+            youtubeStart: Number(formData.youtubeStart || 0),
+            steps
+        };
+
         if (id) {
-            updateRecipe({ ...formData, steps, id });
+            updateRecipe({ ...submitData, id });
         } else {
-            addRecipe({ ...formData, steps });
+            addRecipe(submitData);
         }
         navigate('/recipes');
     };

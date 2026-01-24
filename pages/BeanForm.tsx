@@ -324,7 +324,7 @@ const BeanForm: React.FC = () => {
                             </div>
                         </div>
 
-                        <Input label="점수 (0-100)" name="score" type="number" value={formData.score} onChange={handleChange} max={100} min={0} />
+                        <Input label="점수 (0-100)" name="score" type="number" value={formData.score} onChange={handleChange} max={100} min={0} step="0.1" />
 
                         <div className="flex flex-col gap-1">
                             <label className="text-textSub text-xs">메모</label>

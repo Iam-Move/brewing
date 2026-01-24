@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import { storage } from '../utils/storage';
+import PatchNoteList from '../components/PatchNoteList';
 
-const CURRENT_VERSION = '1.0.2';
+const CURRENT_VERSION = '1.1.0';
 
 const Settings: React.FC = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -118,6 +119,8 @@ const Settings: React.FC = () => {
                         </div>
                         <span className="material-symbols-outlined text-textSub group-hover:text-white">open_in_new</span>
                     </a>
+
+                    <PatchNoteList />
                 </section>
 
                 {/* 2. 백업 및 복원 */}
