@@ -18,7 +18,7 @@ import { DataProvider } from './contexts/DataContext';
 
 const Layout = () => {
   return (
-    <div className="max-w-md mx-auto relative bg-background min-h-screen shadow-2xl overflow-hidden text-textMain">
+    <div className="w-full md:max-w-md mx-auto relative bg-background min-h-screen shadow-2xl overflow-hidden text-textMain">
       <Outlet />
       <BottomNav />
       <InstallPrompt />

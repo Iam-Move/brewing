@@ -22,7 +22,7 @@ const BottomNav: React.FC = () => {
       className="fixed bottom-0 left-0 right-0 bg-background/90 backdrop-blur-md border-t border-white/10 z-50"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
-      <div className="flex justify-around items-center h-[65px] px-2 max-w-md mx-auto">
+      <div className="flex justify-around items-center h-[65px] px-2 w-full md:max-w-md mx-auto">
         <Link to="/beans" className={`flex flex-col items-center justify-center gap-1 w-20 ${isActive('/beans') ? 'text-primary' : 'text-textSub'}`}>
           <span className={`material-symbols-outlined text-[28px] ${isActive('/beans') ? 'filled' : ''}`}>coffee</span>
           <span className={`text-[10px] ${isActive('/beans') ? 'font-bold' : 'font-medium'}`}>원두</span>
