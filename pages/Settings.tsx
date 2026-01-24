@@ -147,6 +147,24 @@ const Settings: React.FC = () => {
                 {/* 기타 기능 */}
                 <section className="space-y-3">
                     <h2 className="text-textMain font-bold text-lg">기타</h2>
+
+                    <a
+                        href="/guide.html"
+                        target="_blank"
+                        className="w-full bg-surface hover:bg-surfaceLight p-4 rounded-xl border border-white/5 flex items-center justify-between group"
+                    >
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-yellow-500/20 flex items-center justify-center">
+                                <span className="material-symbols-outlined text-yellow-400 text-[20px]">menu_book</span>
+                            </div>
+                            <div className="text-left">
+                                <span className="text-textMain font-bold text-sm block">사용자 가이드</span>
+                                <span className="text-textSub text-xs">앱 설치 및 사용법 안내</span>
+                            </div>
+                        </div>
+                        <span className="material-symbols-outlined text-textSub group-hover:text-white">open_in_new</span>
+                    </a>
+
                     <button
                         onClick={handleForceReload}
                         className="w-full bg-surface hover:bg-surfaceLight p-4 rounded-xl border border-white/5 flex items-center justify-between group"

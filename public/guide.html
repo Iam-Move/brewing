@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>BrewNote 사용 가이드</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --primary: #f5c538;
+            --background: #1c1c1e;
+            --surface: #2c2c2e;
+            --text-main: #f2f2f7;
+            --text-sub: #8e8e93;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--background);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 50px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--text-sub);
+            font-size: 0.9rem;
+        }
+
+        section {
+            background-color: var(--surface);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 12px;
+        }
+
+        h2 .material-symbols-outlined {
+            color: var(--primary);
+        }
+
+        h3 {
+            font-size: 1rem;
+            margin: 16px 0 8px 0;
+            color: var(--primary);
+        }
+
+        p {
+            color: #d1d1d6;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-bottom: 12px;
+            color: #d1d1d6;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        .tip-box {
+            background-color: rgba(245, 197, 56, 0.1);
+            border: 1px solid rgba(245, 197, 56, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+
+        .tip-title {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--background);
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--surface);
+            color: var(--primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <span class="material-symbols-outlined"
+                style="font-size: 48px; color: var(--primary); margin-bottom: 10px;">coffee</span>
+            <h1>BrewNote 가이드</h1>
+            <p class="subtitle">나만의 커피 생활을 더 완벽하게 즐기는 방법</p>
+        </header>
+
+        <section>
+            <h2>
+                <span class="material-symbols-outlined">install_mobile</span>
+                1. 앱처럼 설치하기 (필수!)
+            </h2>
+            <p>BrewNote는 웹사이트지만, 설치하면 인터넷 없이도 앱처럼 쓸 수 있습니다.</p>
+
+            <h3>아이폰 (Safari)</h3>
+            <ol style="padding-left: 20px; color: #d1d1d6; margin-bottom: 15px;">
+                <li>사파리 브라우저 하단 <strong>공유 버튼</strong>(네모+화살표)을 누르세요.</li>
+                <li>메뉴를 내려서 <strong>'홈 화면에 추가'</strong>를 선택하세요.</li>
+                <li>바탕화면에 아이콘이 생깁니다!</li>
+            </ol>
+
+            <h3>갤럭시 (Chrome/Samsung Internet)</h3>
+            <ol style="padding-left: 20px; color: #d1d1d6;">
+                <li>브라우저 메뉴(점 3개)를 누르세요.</li>
+                <li><strong>'앱 설치'</strong> 또는 <strong>'홈 화면에 추가'</strong>를 누르세요.</li>
+            </ol>
+
+            <div class="tip-box">
+                <div class="tip-title">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">lightbulb</span>
+                    꿀팁
+                </div>
+                <p style="margin: 0; font-size: 0.9rem;">설치해서 사용하면 주소창이 사라져서 화면이 훨씬 넓고 시원해집니다!</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>
+                <span class="material-symbols-outlined">image</span>
+                2. 원두 사진 예쁘게 넣기
+            </h2>
+            <p>원두를 등록할 때 사진을 자유롭게 자를 수 있습니다.</p>
+            <ul>
+                <li>사진을 선택하면 <strong>검은색 크롭 화면</strong>이 뜹니다.</li>
+                <li>두 손가락으로 <strong>확대/축소</strong>하여 원하는 부분을 맞추세요.</li>
+                <li>완료를 누르면 1:1 비율로 깔끔하게 저장됩니다.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>
+                <span class="material-symbols-outlined">timer</span>
+                3. 푸어링 타이머 마스터하기
+            </h2>
+            <p>레시피에 맞춰 물을 붓는 것을 도와줍니다.</p>
+            <ul>
+                <li><strong>가운데 큰 숫자</strong>: 현재 흐르고 있는 시간입니다.</li>
+                <li><strong>노란색 숫자</strong>: 이번 단계에서 부어야 할 물의 양입니다. (예: +60g)</li>
+                <li><strong>하단 리스트</strong>: 전체 단계를 미리 볼 수 있습니다. 현재 단계는 노란색으로 강조됩니다.</li>
+            </ul>
+            <div class="tip-box">
+                <div class="tip-title">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">warning</span>
+                    화면 꺼짐 방지
+                </div>
+                <p style="margin: 0; font-size: 0.9rem;">타이머가 돌아가는 동안에는 화면이 자동으로 꺼지지 않으니 안심하고 추출하세요!</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>
+                <span class="material-symbols-outlined">save</span>
+                4. 데이터 백업 (매우 중요!)
+            </h2>
+            <p>이 앱은 여러분의 휴대폰에만 데이터를 저장합니다. 서버가 없어서 빠르지만, <strong>폰을 바꾸면 데이터가 사라질 수 있습니다.</strong></p>
+
+            <h3>백업/복원 방법</h3>
+            <ul>
+                <li><strong>설정 > 내 데이터 백업</strong>을 누르면 파일이 다운로드됩니다.</li>
+                <li>이 파일을 카카오톡 나에게 보내기나 클라우드에 저장해두세요.</li>
+                <li>나중에 <strong>데이터 복원</strong>을 눌러 파일을 선택하면 그대로 복구됩니다.</li>
+            </ul>
+        </section>
+
+        <div style="text-align: center; margin-top: 40px; color: var(--text-sub);">
+            <p>즐거운 커피 생활 되세요! ☕️</p>
+        </div>
+    </div>
+
+    <a href="/" class="back-btn" onclick="history.back(); return false;">
+        <span class="material-symbols-outlined">close</span>
+    </a>
+</body>
+
+</html>

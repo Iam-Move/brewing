@@ -109,7 +109,7 @@ const PouringTimer: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-full bg-background overflow-hidden">
+    <div className="flex flex-col h-[100dvh] w-full bg-background overflow-hidden">
       {/* Safe Area 상단 배경 */}
       <div className="fixed top-0 left-0 right-0 bg-background z-30" style={{ height: 'env(safe-area-inset-top, 0px)' }} />
 
@@ -126,66 +126,75 @@ const PouringTimer: React.FC = () => {
         </div>
       </header>
 
-      {/* 메인 컨텐츠 - 상단 정렬 -> 중앙 정렬로 변경 */}
-      <div className="relative w-[300px] h-[300px] flex items-center justify-center shrink-0">
-        <svg className="absolute inset-0 w-full h-full transform -rotate-90">
-          <circle cx="150" cy="150" r={radius} fill="transparent" stroke="#3a3a3c" strokeWidth="5" />
-        </svg>
-        <svg className="absolute inset-0 w-full h-full transform -rotate-90">
-          <circle
-            cx="150" cy="150" r={radius}
-            fill="transparent" stroke="#f5c538" strokeWidth="5"
-            strokeLinecap="round"
-            strokeDasharray={circumference}
-            strokeDashoffset={strokeDashoffset}
-            className="transition-[stroke-dashoffset] duration-100 ease-linear"
-          />
-        </svg>
-        <div className="absolute flex flex-col items-center justify-center text-center">
-          <p className="text-textSub text-lg mb-2 font-medium">{currentStep.label}</p>
-          <h1 className="text-6xl font-black text-textMain tracking-tighter tabular-nums leading-none">
-            {formatTimeDisplay(currentTime)}
-          </h1>
-          <p className="text-primary text-xl font-bold mt-2">
-            {currentStep.addedAmount > 0
-              ? `+${currentStep.addedAmount}g → 총 ${currentStep.waterAmount}g`
-              : '기다리기'
-            }
-          </p>
-        </div>
-      </div>
+      {/* 메인 컨텐츠 영역 - 유연한 높이 및 스크롤 처리 */}
+      <div className="flex-1 overflow-y-auto no-scrollbar relative w-full">
+        <div className="min-h-full flex flex-col items-center justify-center py-8">
 
-      {/* Step List - 전체 표시, 스크롤 없이 */}
-      <div className="w-full mt-4 flex flex-col gap-1 items-center">
-        {recipe.steps.map((step, idx) => {
-          const isCurrent = idx === activeIndex;
-          const isPast = idx < activeIndex;
-          return (
-            <div
-              key={idx}
-              className={`px-4 py-2 rounded-xl transition-all duration-300 ${isCurrent ? 'bg-primary/20 scale-105' : ''}`}
-            >
-              <span className={`text-sm ${isCurrent ? 'font-bold text-primary' :
-                isPast ? 'text-textSub/50' : 'text-textSub'
-                }`}>
-                {formatTime(step.startTime * 10)}~{formatTime(step.endTime * 10)} {step.label} ({step.addedAmount > 0 ? `+${step.addedAmount}g` : '대기'})
-              </span>
+          {/* Timer Circle - 반응형 크기 (최대 320px) */}
+          <div className="relative w-full max-w-[320px] aspect-square flex items-center justify-center shrink-0 mb-6 px-4">
+            <svg className="absolute inset-0 w-full h-full transform -rotate-90">
+              <circle cx="50%" cy="50%" r="46%" fill="transparent" stroke="#3a3a3c" strokeWidth="5" />
+            </svg>
+            <svg className="absolute inset-0 w-full h-full transform -rotate-90">
+              <circle
+                cx="50%" cy="50%" r="46%"
+                fill="transparent" stroke="#f5c538" strokeWidth="5"
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={strokeDashoffset}
+                className="transition-[stroke-dashoffset] duration-100 ease-linear"
+              />
+            </svg>
+            <div className="absolute flex flex-col items-center justify-center text-center inset-0">
+              <p className="text-textSub text-lg mb-2 font-medium">{currentStep.label}</p>
+              <h1 className="text-6xl font-black text-textMain tracking-tighter tabular-nums leading-none">
+                {formatTimeDisplay(currentTime)}
+              </h1>
+              <p className="text-primary text-xl font-bold mt-2">
+                {currentStep.addedAmount > 0
+                  ? `+${currentStep.addedAmount}g → 총 ${currentStep.waterAmount}g`
+                  : '기다리기'
+                }
+              </p>
             </div>
-          );
-        })}
+          </div>
+
+          {/* Step List */}
+          <div className="w-full flex flex-col gap-2 items-center px-4 pb-4">
+            {recipe.steps.map((step, idx) => {
+              const isCurrent = idx === activeIndex;
+              const isPast = idx < activeIndex;
+              return (
+                <div
+                  key={idx}
+                  className={`px-5 py-3 rounded-xl transition-all duration-300 w-full max-w-[300px] flex justify-center ${isCurrent ? 'bg-primary/20 scale-105 ring-1 ring-primary/50' : ''}`}
+                >
+                  <span className={`text-base ${isCurrent ? 'font-bold text-primary' :
+                    isPast ? 'text-textSub/40' : 'text-textSub'
+                    }`}>
+                    {formatTime(step.startTime * 10)}~{formatTime(step.endTime * 10)} {step.label}
+                    <span className="ml-2 text-sm opacity-80">
+                      ({step.addedAmount > 0 ? `+${step.addedAmount}g` : '대기'})
+                    </span>
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       {/* Control Button - 하단 고정 */}
       <div
-        className="shrink-0 p-4 bg-background"
-        style={{ paddingBottom: 'calc(16px + env(safe-area-inset-bottom, 0px))' }}
+        className="shrink-0 p-4 bg-background border-t border-white/5"
+        style={{ paddingBottom: 'calc(20px + env(safe-area-inset-bottom, 0px))' }}
       >
         <button
           onClick={toggleTimer}
-          className="w-full max-w-[400px] mx-auto bg-primary text-background h-14 rounded-full flex items-center justify-center gap-2 active:scale-95 transition-transform"
+          className="w-full max-w-[400px] mx-auto bg-primary text-background h-16 rounded-full flex items-center justify-center gap-2 active:scale-95 transition-transform shadow-lg shadow-primary/20"
         >
-          <span className="material-symbols-outlined text-[24px]">{getButtonIcon()}</span>
-          <span className="text-lg font-bold">{getButtonText()}</span>
+          <span className="material-symbols-outlined text-[32px]">{getButtonIcon()}</span>
+          <span className="text-xl font-bold">{getButtonText()}</span>
         </button>
       </div>
     </div>
