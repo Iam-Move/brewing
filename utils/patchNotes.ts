@@ -6,6 +6,14 @@ export interface PatchNote {
 
 export const PATCH_NOTES: PatchNote[] = [
     {
+        version: '1.1.1',
+        date: '2026-01-25',
+        changes: [
+            '원두 정보 입력 시에도 점수와 가격을 지웠을 때 0이 자동으로 입력되지 않도록 개선했습니다.',
+            '입력 편의성을 위해 내부 로직을 최적화했습니다.'
+        ]
+    },
+    {
         version: '1.1.0',
         date: '2026-01-24',
         changes: [

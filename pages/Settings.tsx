@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { storage } from '../utils/storage';
 import PatchNoteList from '../components/PatchNoteList';
 
-const CURRENT_VERSION = '1.1.0';
+const CURRENT_VERSION = '1.1.1';
 
 const Settings: React.FC = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);

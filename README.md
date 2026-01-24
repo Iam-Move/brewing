@@ -55,5 +55,4 @@ BrewNote는 **서버가 없습니다.** 회원가입도, 로그인도 필요 없
 <br/>
 
 ---
-Designed & Developed by [IamMove]
-
+Designed & Developed by [Kwglo]

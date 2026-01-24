@@ -10,7 +10,11 @@ const BeanForm: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const { addBean, updateBean, beans } = useData();
 
-    const [formData, setFormData] = useState<Omit<Bean, 'id'>>({
+    // State with number | string to handle empty inputs
+    const [formData, setFormData] = useState<Omit<Bean, 'id' | 'price' | 'score'> & {
+        price: number | string;
+        score: number | string;
+    }>({
         name: '',
         roastery: '',
         country: '',
@@ -58,7 +62,9 @@ const BeanForm: React.FC = () => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
-            [name]: name === 'price' || name === 'score' ? Number(value) : value
+            [name]: name === 'price' || name === 'score'
+                ? (value === '' ? '' : Number(value))
+                : value
         }));
     };
 
@@ -127,10 +133,17 @@ const BeanForm: React.FC = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
+        const submitData: Omit<Bean, 'id'> = {
+            ...formData,
+            price: Number(formData.price),
+            score: Number(formData.score)
+        };
+
         if (id) {
-            updateBean({ ...formData, id });
+            updateBean({ ...submitData, id });
         } else {
-            addBean(formData);
+            addBean(submitData);
         }
         navigate('/beans');
     };
