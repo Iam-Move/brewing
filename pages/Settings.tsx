@@ -79,39 +79,50 @@ const Settings: React.FC = () => {
 
             <div className="p-4 space-y-6">
 
-                {/* 안내 문구 섹션 */}
+                {/* 1. 업데이트 및 가이드 (가장 상단으로 이동) */}
                 <section className="space-y-3">
-                    <h2 className="text-textMain font-bold text-lg">데이터 관리 가이드</h2>
-                    <div className="bg-surface rounded-xl p-5 space-y-3 border border-white/5">
-                        <div className="flex gap-3">
-                            <span className="material-symbols-outlined text-yellow-400 shrink-0">warning</span>
-                            <div>
-                                <h3 className="text-textMain font-bold text-sm mb-1">데이터가 사라질 수 있어요!</h3>
-                                <p className="text-textSub text-sm leading-relaxed">
-                                    이 앱은 서버가 없는 "1인용 앱"입니다. 모든 원두와 레시피는 고객님의 휴대폰(브라우저)에만 저장됩니다.<br /><br />
-                                    따라서 <strong>캐시 삭제</strong>를 하거나 <strong>브라우저를 삭제</strong>하면 소중한 기록이 모두 지워질 수 있습니다.
-                                </p>
+                    <button
+                        onClick={handleForceReload}
+                        className="w-full bg-surface hover:bg-surfaceLight p-4 rounded-xl border border-white/5 flex items-center justify-between group"
+                    >
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
+                                <span className="material-symbols-outlined text-green-400 text-[20px]">refresh</span>
+                            </div>
+                            <div className="text-left">
+                                <span className="text-textMain font-bold text-sm flex items-center gap-2">
+                                    업데이트 확인 (새로고침)
+                                    {latestVersion && latestVersion !== CURRENT_VERSION && (
+                                        <span className="bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full animate-pulse">NEW</span>
+                                    )}
+                                </span>
+                                <span className="text-textSub text-xs">최신 버전이 안 보일 때</span>
                             </div>
                         </div>
+                        <span className="material-symbols-outlined text-textSub group-hover:text-white">chevron_right</span>
+                    </button>
 
-                        <div className="h-px bg-white/10 w-full my-1"></div>
-
-                        <div className="flex gap-3">
-                            <span className="material-symbols-outlined text-blue-400 shrink-0">phonelink_setup</span>
-                            <div>
-                                <h3 className="text-textMain font-bold text-sm mb-1">기기를 변경할 때</h3>
-                                <p className="text-textSub text-sm leading-relaxed">
-                                    새 핸드폰을 사더라도 데이터가 자동으로 따라오지 않습니다.<br />
-                                    기기 변경 전 반드시 <strong>[백업]</strong> 기능을 이용해 파일을 저장해두고, 새 기기에서 <strong>[복원]</strong> 해주세요.
-                                </p>
+                    <a
+                        href="/guide.html"
+                        target="_blank"
+                        className="w-full bg-surface hover:bg-surfaceLight p-4 rounded-xl border border-white/5 flex items-center justify-between group"
+                    >
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-yellow-500/20 flex items-center justify-center">
+                                <span className="material-symbols-outlined text-yellow-400 text-[20px]">menu_book</span>
+                            </div>
+                            <div className="text-left">
+                                <span className="text-textMain font-bold text-sm block">사용자 가이드</span>
+                                <span className="text-textSub text-xs">앱 설치 및 사용법 안내</span>
                             </div>
                         </div>
-                    </div>
+                        <span className="material-symbols-outlined text-textSub group-hover:text-white">open_in_new</span>
+                    </a>
                 </section>
 
-                {/* 백업/복원 버튼 섹션 */}
+                {/* 2. 백업 및 복원 */}
                 <section className="space-y-3">
-                    <h2 className="text-textMain font-bold text-lg">백업 및 복원</h2>
+                    <h2 className="text-textMain font-bold text-lg">데이터 백업/복원</h2>
                     <div className="grid grid-cols-2 gap-3">
                         <button
                             onClick={handleBackup}
@@ -144,47 +155,20 @@ const Settings: React.FC = () => {
                     />
                 </section>
 
-                {/* 기타 기능 */}
+                {/* 3. 데이터 관리 가이드 (하단으로 이동) */}
                 <section className="space-y-3">
-                    <h2 className="text-textMain font-bold text-lg">기타</h2>
-
-                    <a
-                        href="/guide.html"
-                        target="_blank"
-                        className="w-full bg-surface hover:bg-surfaceLight p-4 rounded-xl border border-white/5 flex items-center justify-between group"
-                    >
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-yellow-500/20 flex items-center justify-center">
-                                <span className="material-symbols-outlined text-yellow-400 text-[20px]">menu_book</span>
-                            </div>
-                            <div className="text-left">
-                                <span className="text-textMain font-bold text-sm block">사용자 가이드</span>
-                                <span className="text-textSub text-xs">앱 설치 및 사용법 안내</span>
+                    <div className="bg-surface rounded-xl p-5 space-y-3 border border-white/5 opacity-80">
+                        <div className="flex gap-3">
+                            <span className="material-symbols-outlined text-textSub shrink-0">info</span>
+                            <div>
+                                <h3 className="text-textMain font-bold text-sm mb-1">모든 데이터는 휴대폰에만 저장됩니다</h3>
+                                <p className="text-textSub text-xs leading-relaxed">
+                                    이 앱은 별도의 서버가 없습니다. (해킹 걱정 NO!)<br />
+                                    대신 <strong>인터넷 캐시를 삭제</strong>하거나 <strong>앱을 삭제</strong>하면 데이터가 지워질 수 있으니, 중요한 기록은 꼭 <strong>백업</strong>해주세요.
+                                </p>
                             </div>
                         </div>
-                        <span className="material-symbols-outlined text-textSub group-hover:text-white">open_in_new</span>
-                    </a>
-
-                    <button
-                        onClick={handleForceReload}
-                        className="w-full bg-surface hover:bg-surfaceLight p-4 rounded-xl border border-white/5 flex items-center justify-between group"
-                    >
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
-                                <span className="material-symbols-outlined text-green-400 text-[20px]">refresh</span>
-                            </div>
-                            <div className="text-left">
-                                <span className="text-textMain font-bold text-sm flex items-center gap-2">
-                                    업데이트 확인 (새로고침)
-                                    {latestVersion && latestVersion !== CURRENT_VERSION && (
-                                        <span className="bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full animate-pulse">NEW</span>
-                                    )}
-                                </span>
-                                <span className="text-textSub text-xs">최신 버전이 안 보일 때</span>
-                            </div>
-                        </div>
-                        <span className="material-symbols-outlined text-textSub group-hover:text-white">chevron_right</span>
-                    </button>
+                    </div>
                 </section>
 
                 <div className="text-center text-textSub/30 text-xs mt-10">

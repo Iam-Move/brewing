@@ -1,82 +1,58 @@
-# ☕ Brew Note
+# ☕ BrewNote (브루노트)
 
-드립 커피 레시피와 원두를 기록하고 관리하는 웹 앱입니다.
-서버 없이 브라우저의 **로컬 스토리지(LocalStorage)**를 사용하여 모든 데이터를 사용자의 기기에 직접 저장합니다.
+> **당신의 커피 라이프를 기록하는 가장 가볍고 안전한 방법**  
+> 서버 없이 내 휴대폰에만 저장되는 '나만의 커피 다이어리'
 
-## 🚀 주요 기능
+[![Version](https://img.shields.io/badge/version-v1.0.2-blue?style=for-the-badge&logo=none)](https://brewing.iammove.com)
+[![Privacy](https://img.shields.io/badge/Privacy-Local%20Storage-green?style=for-the-badge&logo=guard)](https://brewing.iammove.com)
+[![Serverless](https://img.shields.io/badge/Serverless-100%25-orange?style=for-the-badge&logo=cloudflare)](https://brewing.iammove.com)
+[![License](https://img.shields.io/badge/License-MIT-lightgrey?style=for-the-badge)](https://github.com/kwglo)
 
-- **원두 관리**: 원두 정보, 테이스팅 노트, 개인 평가 기록 (이미지 업로드 포함)
-- **레시피 관리**: 유튜브 영상 연동, 드리퍼별 푸어링 레시피 저장
-- **푸어링 타이머**: 레시피 기반 가이드 타이머 + 프리 타이머 (중앙 정렬 UI)
-- **데이터 백업/복원**: 데이터를 파일로 내보내거나 가져와 기기 변경 시 복구 가능
-- **오프라인 사용**: 서버가 없어 빠르고, 인터넷 연결 없이도 데이터 조회 가능
+<br/>
 
----
+## 🔗 접속 주소
+### 👉 [https://brewing.iammove.com](https://brewing.iammove.com)
+(아이폰/갤럭시에서 '홈 화면에 추가'하면 앱처럼 사용할 수 있습니다)
 
-## 📁 프로젝트 구조
+<br/>
 
-```
-brew-note/
-├── components/             # 재사용 가능한 UI 컴포넌트
-│   └── BottomNav.tsx       # 하단 네비게이션
-├── pages/                  # 페이지 컴포넌트
-│   ├── BeanList/Detail/Form # 원두 관련 페이지
-│   ├── RecipeList/Detail/Form # 레시피 관련 페이지
-│   ├── PouringTimer.tsx    # 푸어링 타이머 (핵심 기능)
-│   └── Settings.tsx        # 백업 및 복원 기능
-├── contexts/               # 전역 상태 관리
-│   └── DataContext.tsx     # 데이터(원두/레시피) 로직
-├── utils/
-│   └── storage.ts          # LocalStorage 입출력 및 백업/복원 유틸
-├── App.tsx                 # 라우팅 설정
-└── data.ts                 # 초기 샘플 데이터
-```
+## ✨ 주요 특징 (Key Features)
 
----
+### 🔒 완벽한 프라이버시 (Privacy First)
+BrewNote는 **서버가 없습니다.** 회원가입도, 로그인도 필요 없습니다.
+모든 원두 기록과 레시피는 **오직 사용자의 휴대폰 브라우저(Local Storage)에만 저장**됩니다.
+개발자조차 여러분이 어떤 커피를 마시는지 알 수 없습니다.
 
-## 💻 로컬 개발
+### 📱 반응형 모바일 디자인 (Mobile First)
+- 아이폰, 갤럭시 등 모든 모바일 기기에 완벽하게 대응합니다.
+- 설치형 웹앱(PWA) 지원으로 네이티브 앱 같은 부드러운 경험을 제공합니다.
+- 다크 모드 기본 지원으로 눈이 편안합니다.
 
-```bash
-# 1. 의존성 설치
-npm install
+### ⏱️ 푸어링 타이머 (Pouring Timer)
+- 하리오 V60, 칼리타 등 다양한 드리퍼에 맞는 레시피를 만들 수 있습니다.
+- 물을 붓는 단계별로 시간을 알려주는 시각적 타이머를 제공합니다.
+- 화면 꺼짐 방지 기능이 내장되어 있어 편하게 추출에 집중할 수 있습니다.
 
-# 2. 개발 서버 실행
-npm run dev
-```
+### 💾 안전한 백업 (Backup & Restore)
+- 기기를 변경질 때를 대비해 **JSON 파일 내보내기/가져오기** 기능을 제공합니다.
+- 내 데이터는 내가 직접 소유하고 관리합니다.
 
-브라우저에서 `http://localhost:5173` 접속하여 확인합니다.
+<br/>
 
----
-
-## ☁️ 배포하기 (무료)
-
-이 프로젝트는 **Cloudflare Pages** 또는 **Vercel**과 같은 정적 호스팅 서비스에 무료로 배포할 수 있습니다.
-
-### 추천: Cloudflare Pages
-1. GitHub에 이 코드를 Push 합니다.
-2. [Cloudflare Dashboard](https://dash.cloudflare.com/) > **Workers & Pages** > **Create application**
-3. **Pages** > **Connect to Git** > Repo 선택
-4. `npm run build` 및 `dist` 디렉토리가 자동으로 감지됩니다. **Save and Deploy** 클릭!
-
-(자세한 방법은 `deployment.md` 파일을 참고하세요)
-
----
-
-## 📱 모바일 사용 팁 (PWA)
-
-배포된 사이트에 모바일 브라우저(Safari, Chrome)로 접속한 뒤 **"홈 화면에 추가"**를 하면, 주소창 없이 **앱처럼 전체 화면**으로 실행됩니다.
-
----
-
-## 🔧 기술 스택
-
+## 🛠 기술 스택 (Tech Stack)
 - **Framework**: React, Vite
-- **Styling**: Tailwind CSS
-- **Data**: LocalStorage, JSON Export/Import
-- **Image**: React Easy Crop (1:1 이미지 크롭)
+- **Language**: TypeScript
+- **Styling**: TailwindCSS
+- **Storage**: Browser LocalStorage (No Backend)
+- **Deployment**: FDA Cloudflare Pages
+
+<br/>
+
+## ⚠️ 데이터 관리 주의사항
+이 앱은 서버가 없으므로 **브라우저 캐시를 삭제**하거나 **앱을 삭제**하면 데이터가 사라질 수 있습니다.
+소중한 커피 기록은 [설정] 탭에서 주기적으로 **백업 파일**로 저장해주세요.
+
+<br/>
 
 ---
-
-## 📄 라이선스
-
-MIT License
+Designed & Developed by [Kwglo]
