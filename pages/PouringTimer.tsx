@@ -88,12 +88,12 @@ const PouringTimer: React.FC = () => {
     }
   };
 
-  const radius = 140;
-  const circumference = 2 * Math.PI * radius;
   const stepDuration = currentStep.endTime - currentStep.startTime;
   const timeInStep = (currentTime / 10) - currentStep.startTime;
   const progressPercent = Math.min(Math.max(timeInStep / stepDuration, 0), 1);
-  const strokeDashoffset = circumference - (progressPercent * circumference);
+  // pathLength=1 strokeDashoffset calculation:
+  // 1 = full (offset 0), 0 = empty (offset 1)
+  const strokeDashoffset = 1 - progressPercent;
 
   const getButtonText = () => {
     if (isFinished) return '다시 시작';
@@ -140,8 +140,9 @@ const PouringTimer: React.FC = () => {
                 cx="50%" cy="50%" r="46%"
                 fill="transparent" stroke="#f5c538" strokeWidth="5"
                 strokeLinecap="round"
-                strokeDasharray={circumference}
+                strokeDasharray="1"
                 strokeDashoffset={strokeDashoffset}
+                pathLength="1"
                 className="transition-[stroke-dashoffset] duration-100 ease-linear"
               />
             </svg>
