@@ -12,6 +12,7 @@ const RecipeList: React.FC = () => {
   const [typeFilter, setTypeFilter] = useState<string>('All');
   const [dripperFilter, setDripperFilter] = useState<string>('All');
   const [roastFilter, setRoastFilter] = useState<string>('All');
+  const [amountFilter, setAmountFilter] = useState<string>('All');
 
   // 온도 필터 - 고정 순서
   const types = ['All', 'Hot', 'Iced', 'Hot/Iced'];
@@ -49,21 +50,30 @@ const RecipeList: React.FC = () => {
     return ['All', ...sorted];
   }, []);
 
+  // 원두 도징량 필터 - 숫자 오름차순
+  const beanAmounts = useMemo(() => {
+    const unique = [...new Set(recipes.map(r => r.beanAmount))];
+    const sorted = unique.sort((a, b) => a - b);
+    return ['All', ...sorted];
+  }, [recipes]);
+
   const filteredRecipes = useMemo(() => {
     return recipes.filter(recipe => {
       const matchType = typeFilter === 'All' || recipe.type === typeFilter;
       const matchDripper = dripperFilter === 'All' || recipe.dripper === dripperFilter;
       const matchRoast = roastFilter === 'All' || recipe.roastLevel.includes(roastFilter);
-      return matchType && matchDripper && matchRoast;
+      const matchAmount = amountFilter === 'All' || recipe.beanAmount === Number(amountFilter);
+      return matchType && matchDripper && matchRoast && matchAmount;
     });
-  }, [typeFilter, dripperFilter, roastFilter]);
+  }, [typeFilter, dripperFilter, roastFilter, amountFilter]);
 
-  const activeFilterCount = [typeFilter, dripperFilter, roastFilter].filter(f => f !== 'All').length;
+  const activeFilterCount = [typeFilter, dripperFilter, roastFilter, amountFilter].filter(f => f !== 'All').length;
 
   const resetFilters = () => {
     setTypeFilter('All');
     setDripperFilter('All');
     setRoastFilter('All');
+    setAmountFilter('All');
   };
 
   return (
@@ -91,9 +101,9 @@ const RecipeList: React.FC = () => {
 
       {/* 필터 영역 */}
       <div className="px-4 py-3">
-        <div className="flex gap-2 items-center">
+        <div className="grid grid-cols-2 gap-2">
           {/* 온도 드롭다운 */}
-          <div className="relative flex-1">
+          <div className="relative">
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
@@ -114,7 +124,7 @@ const RecipeList: React.FC = () => {
           </div>
 
           {/* 드리퍼 드롭다운 */}
-          <div className="relative flex-1">
+          <div className="relative">
             <select
               value={dripperFilter}
               onChange={(e) => setDripperFilter(e.target.value)}
@@ -135,7 +145,7 @@ const RecipeList: React.FC = () => {
           </div>
 
           {/* 배전도 드롭다운 */}
-          <div className="relative flex-1">
+          <div className="relative">
             <select
               value={roastFilter}
               onChange={(e) => setRoastFilter(e.target.value)}
@@ -147,6 +157,27 @@ const RecipeList: React.FC = () => {
               {roastLevels.map(level => (
                 <option key={level} value={level}>
                   {level === 'All' ? '배전도 전체' : level}
+                </option>
+              ))}
+            </select>
+            <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-textSub text-[18px] pointer-events-none">
+              expand_more
+            </span>
+          </div>
+
+          {/* 원두량 드롭다운 */}
+          <div className="relative">
+            <select
+              value={amountFilter}
+              onChange={(e) => setAmountFilter(e.target.value)}
+              className={`w-full appearance-none bg-surface text-sm rounded-lg px-3 py-2.5 pr-8 outline-none border transition-colors cursor-pointer ${amountFilter !== 'All'
+                ? 'border-primary text-primary'
+                : 'border-transparent text-textMain'
+                }`}
+            >
+              {beanAmounts.map(amount => (
+                <option key={amount} value={amount}>
+                  {amount === 'All' ? '원두량 전체' : `${amount}g`}
                 </option>
               ))}
             </select>
