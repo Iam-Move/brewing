@@ -19,6 +19,13 @@ const BeanList: React.FC = () => {
           ${bean.country || ''} 
           ${bean.region || ''} 
           ${bean.farm || ''}
+          ${bean.producer || ''}
+          ${bean.variety || ''}
+          ${bean.altitude || ''}
+          ${bean.roastLevel || ''}
+          ${bean.tastingNotes?.join(' ') || ''}
+          ${bean.myNotes?.join(' ') || ''}
+          ${bean.memo || ''}
       `.toLowerCase();
 
     // Check if EVERY search term is present in the target string
@@ -56,7 +63,7 @@ const BeanList: React.FC = () => {
           <input
             type="text"
             className="block w-full pl-10 pr-3 py-3 rounded-xl bg-surface border-none text-textMain placeholder-textSub focus:ring-1 focus:ring-primary focus:outline-none"
-            placeholder="원두, 로스터리, 가공방식, 국가 검색"
+            placeholder="원두 관련 모든 정보 검색"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
