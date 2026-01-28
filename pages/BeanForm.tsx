@@ -237,12 +237,12 @@ const BeanForm: React.FC = () => {
                 <section className="space-y-4">
                     <h2 className="text-textSub font-bold text-sm">기본 정보</h2>
                     <div className="bg-surface rounded-xl p-4 space-y-4">
-                        <Input label="원두명(필수입력)" name="name" value={formData.name} onChange={handleChange} required />
-                        <Input label="로스터리(필수입력)" name="roastery" value={formData.roastery} onChange={handleChange} required />
-                        <Input label="국가(필수입력)" name="country" value={formData.country} onChange={handleChange} required />
-                        <Input label="지역" name="region" value={formData.region} onChange={handleChange} />
-                        <Input label="농장" name="farm" value={formData.farm} onChange={handleChange} />
-                        <Input label="생산자" name="producer" value={formData.producer} onChange={handleChange} />
+                        <Input label="원두명" name="name" value={formData.name} onChange={handleChange} required placeholder="필수 입력..." />
+                        <Input label="로스터리" name="roastery" value={formData.roastery} onChange={handleChange} required placeholder="필수 입력..." />
+                        <Input label="국가" name="country" value={formData.country} onChange={handleChange} required placeholder="필수 입력..." />
+                        <Input label="지역" name="region" value={formData.region} onChange={handleChange} placeholder="예: 시다마" />
+                        <Input label="농장" name="farm" value={formData.farm} onChange={handleChange} placeholder="예: 봄베" />
+                        <Input label="생산자" name="producer" value={formData.producer} onChange={handleChange} placeholder="예: 핀카 데보라" />
                     </div>
                 </section>
 
@@ -250,9 +250,9 @@ const BeanForm: React.FC = () => {
                 <section className="space-y-4">
                     <h2 className="text-textSub font-bold text-sm">상세 정보</h2>
                     <div className="bg-surface rounded-xl p-4 space-y-4">
-                        <Input label="품종" name="variety" value={formData.variety} onChange={handleChange} />
+                        <Input label="품종" name="variety" value={formData.variety} onChange={handleChange} placeholder="예: 게이샤" />
                         <Input label="고도" name="altitude" value={formData.altitude} onChange={handleChange} placeholder="예: 1800-2000" />
-                        <Input label="가공 방식(필수입력)" name="process" value={formData.process} onChange={handleChange} required />
+                        <Input label="가공 방식" name="process" value={formData.process} onChange={handleChange} required placeholder="필수 입력..." />
 
                         <div className="flex flex-col gap-1">
                             <label className="text-textSub text-xs">로스팅 포인트</label>
