@@ -27,9 +27,14 @@ const RecipeForm: React.FC = () => {
         waterAmount: 300,
         youtubeId: '',
         youtubeStart: 0,
+        pouringMethod: '',
+        flowRate: '',
+        waterInfo: '',
+        micron: ''
     });
 
     const [steps, setSteps] = useState<PourStep[]>([]);
+    const [showAdvanced, setShowAdvanced] = useState(false);
 
     // Load existing data
     React.useEffect(() => {
@@ -40,6 +45,10 @@ const RecipeForm: React.FC = () => {
                 const { id: _, steps: existingSteps, ...rest } = existingRecipe;
                 setFormData(rest);
                 setSteps(existingSteps);
+                // Expand advanced section if data exists
+                if (existingRecipe.pouringMethod || existingRecipe.flowRate || existingRecipe.waterInfo) {
+                    setShowAdvanced(true);
+                }
             }
         }
     }, [id, recipes]);
@@ -138,7 +147,7 @@ const RecipeForm: React.FC = () => {
                 <section className="space-y-4">
                     <h2 className="text-textSub font-bold text-sm">기본 정보</h2>
                     <div className="bg-surface rounded-xl p-4 space-y-4">
-                        <Input label="레시피 제목(필수입력)" name="title" value={formData.title} onChange={handleChange} required />
+                        <Input label="레시피 제목" name="title" value={formData.title} onChange={handleChange} required placeholder="필수 입력..." />
 
                         <div className="flex flex-col gap-1">
                             <label className="text-textSub text-xs">음료 타입</label>
@@ -173,7 +182,7 @@ const RecipeForm: React.FC = () => {
                             </div>
                         </div>
 
-                        <Input label="드리퍼(필수입력)" name="dripper" value={formData.dripper} onChange={handleChange} required />
+                        <Input label="드리퍼" name="dripper" value={formData.dripper} onChange={handleChange} required placeholder="필수 입력..." />
                         <Input label="필터" name="filter" value={formData.filter} onChange={handleChange} />
                         <Input label="그라인더" name="grinder" value={formData.grinder} onChange={handleChange} />
                         <Input label="분쇄도" name="grindSetting" value={formData.grindSetting} onChange={handleChange} placeholder="예: 28 click" />
@@ -181,8 +190,31 @@ const RecipeForm: React.FC = () => {
                         <Input label="원두 양(g)" name="beanAmount" type="number" value={formData.beanAmount} onChange={handleChange} />
                         <Input label="총 물 사용량(g)" name="waterAmount" type="number" value={formData.waterAmount} onChange={handleChange} />
                         <Input label="유튜브 ID" name="youtubeId" value={formData.youtubeId} onChange={handleChange} placeholder="영상 ID (예: bVh1yP9imQk)" />
-                        <Input label="시작 시간(초)" name="youtubeStart" type="number" value={formData.youtubeStart} onChange={handleChange} />
+                        <Input label="유튜브 영상 시작 시간(초)" name="youtubeStart" type="number" value={formData.youtubeStart} onChange={handleChange} />
                     </div>
+                </section>
+
+                {/* 고급 정보 */}
+                <section className="space-y-4">
+                    <button
+                        type="button"
+                        onClick={() => setShowAdvanced(!showAdvanced)}
+                        className="flex items-center gap-2 text-textSub font-bold text-sm hover:text-textMain transition-colors"
+                    >
+                        <span className="material-symbols-outlined text-[20px]">
+                            {showAdvanced ? 'expand_less' : 'expand_more'}
+                        </span>
+                        고급
+                    </button>
+
+                    {showAdvanced && (
+                        <div className="bg-surface rounded-xl p-4 space-y-4 animation-slide-down">
+                            <Input label="푸어링 방식" name="pouringMethod" value={formData.pouringMethod || ''} onChange={handleChange} placeholder="예: 센터 푸어" />
+                            <Input label="유량(g/초)" name="flowRate" value={formData.flowRate || ''} onChange={handleChange} placeholder="예: 8.5" />
+                            <Input label="분쇄도(마이크론, µm)" name="micron" value={formData.micron || ''} onChange={handleChange} placeholder="예: 1000~1050" />
+                            <Input label="물 정보" name="waterInfo" value={formData.waterInfo || ''} onChange={handleChange} placeholder="예: 평창수" />
+                        </div>
+                    )}
                 </section>
 
                 {/* 푸어링 단계 */}
@@ -276,7 +308,7 @@ const Input: React.FC<InputProps> = ({ label, className, ...props }) => (
     <div className="flex flex-col gap-1">
         <label className="text-textSub text-xs">{label}</label>
         <input
-            className={`w-full bg-background text-textMain rounded-lg p-3 border border-white/10 focus:border-primary outline-none ${className}`}
+            className={`w-full bg-background text-textMain rounded-lg p-3 border border-white/10 focus:border-primary outline-none ${props.disabled ? 'opacity-50' : ''} ${className}`}
             {...props}
         />
     </div>

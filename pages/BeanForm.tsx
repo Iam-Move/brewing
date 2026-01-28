@@ -28,6 +28,7 @@ const BeanForm: React.FC = () => {
         roastDate: new Date().toISOString().split('T')[0],
         price: 0,
         imageUrl: '',
+        tastingRecords: [],
         tastingNotes: [],
         myNotes: [],
         score: 0,
@@ -36,7 +37,6 @@ const BeanForm: React.FC = () => {
     });
 
     const [tastingNoteInput, setTastingNoteInput] = useState('');
-    const [myNoteInput, setMyNoteInput] = useState('');
 
     // Image Crop State
     const [imageSrc, setImageSrc] = useState<string | null>(null);
@@ -308,46 +308,14 @@ const BeanForm: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* 나의 노트 태그 입력 */}
-                        <div className="flex flex-col gap-2">
-                            <label className="text-textSub text-xs">나의 노트</label>
-                            <div className="flex flex-wrap gap-2 mb-1">
-                                {formData.myNotes.map((note, idx) => (
-                                    <span key={idx} className="bg-secondary/20 text-secondary px-2 py-1 rounded text-sm flex items-center gap-1">
-                                        {note}
-                                        <button type="button" onClick={() => handleRemoveTag('myNotes', idx)} className="hover:text-white">x</button>
-                                    </span>
-                                ))}
-                            </div>
-                            <div className="flex gap-2">
-                                <input
-                                    value={myNoteInput}
-                                    onChange={(e) => setMyNoteInput(e.target.value)}
-                                    onKeyDown={(e) => handleKeyDown(e, 'myNotes', myNoteInput, setMyNoteInput)}
-                                    className="flex-1 bg-background text-textMain rounded-lg p-3 border border-white/10 focus:border-primary outline-none"
-                                    placeholder="입력 후 추가 버튼 또는 엔터"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => { handleAddTag('myNotes', myNoteInput); setMyNoteInput(''); }}
-                                    className="bg-surfaceLight hover:bg-white/10 text-textMain px-4 rounded-lg font-bold text-sm border border-white/10 transition-colors"
-                                >
-                                    추가
-                                </button>
-                            </div>
-                        </div>
-
-                        <Input label="점수 (0-100)" name="score" type="number" value={formData.score} onChange={handleChange} max={100} min={0} step="0.1" />
-
-                        <div className="flex flex-col gap-1">
-                            <label className="text-textSub text-xs">메모</label>
-                            <textarea
-                                name="memo"
-                                value={formData.memo}
-                                onChange={handleChange}
-                                rows={4}
-                                className="w-full bg-background text-textMain rounded-lg p-3 border border-white/10 focus:border-primary outline-none resize-none"
-                            />
+                        <div className="p-4 bg-surfaceLight/50 rounded-lg border border-white/5">
+                            <p className="text-textSub text-sm text-center">
+                                시음 기록(점수, 메모)은
+                                <br />
+                                <span className="text-primary font-bold">저장 후 원두 상세 페이지</span>에서
+                                <br />
+                                추가하실 수 있습니다.
+                            </p>
                         </div>
 
                     </div>

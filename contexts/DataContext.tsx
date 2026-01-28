@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Bean, Recipe } from '../types';
+import { Bean, Recipe, TastingRecord } from '../types';
 import { storage } from '../utils/storage';
 
 interface DataContextType {
@@ -20,8 +20,48 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [recipes, setRecipes] = useState<Recipe[]>([]);
 
     useEffect(() => {
-        setBeans(storage.getBeans());
-        setRecipes(storage.getRecipes());
+        const loadedBeans = storage.getBeans();
+        const loadedRecipes = storage.getRecipes();
+
+        // Migration Logic: Convert legacy score/memo/myNotes to TastingRecord
+        const migratedBeans = loadedBeans.map(bean => {
+            const hasLegacyData = (bean.score && bean.score > 0) || (bean.memo && bean.memo.trim().length > 0);
+            const alreadyMigrated = bean.tastingRecords?.some(r => r.id === `legacy-${bean.id}`);
+
+            if (hasLegacyData && !alreadyMigrated) {
+                const myNotesStr = bean.myNotes && bean.myNotes.length > 0
+                    ? `나의 컵노트: ${bean.myNotes.join(' ')}\n`
+                    : '';
+
+                const legacyRecord: any = { // Type assertion to avoid import issues if needed, or strict Typing
+                    id: `legacy-${bean.id}`,
+                    // Use roastDate as default date for legacy records, or today if missing
+                    date: bean.roastDate ? new Date(bean.roastDate).toISOString() : new Date().toISOString(),
+                    score: bean.score || 0,
+                    memo: `${myNotesStr}${bean.memo || ''}`.trim(),
+                    tastingNotes: []
+                };
+
+                return {
+                    ...bean,
+                    tastingRecords: [...(bean.tastingRecords || []), legacyRecord],
+                    // Clear legacy fields to prevent double display/migration
+                    score: 0,
+                    memo: '',
+                    myNotes: []
+                };
+            }
+            return bean;
+        });
+
+        if (JSON.stringify(loadedBeans) !== JSON.stringify(migratedBeans)) {
+            setBeans(migratedBeans);
+            storage.saveBeans(migratedBeans);
+        } else {
+            setBeans(loadedBeans);
+        }
+
+        setRecipes(loadedRecipes);
     }, []);
 
     const addBean = (beanData: Omit<Bean, 'id'>) => {

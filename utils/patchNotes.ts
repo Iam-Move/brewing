@@ -6,6 +6,16 @@ export interface PatchNote {
 
 export const PATCH_NOTES: PatchNote[] = [
     {
+        version: '1.2.0',
+        date: '2026-01-28',
+        changes: [
+            '원두 시음 기록 기능이 강화되었습니다. (날짜 선택, 수정/삭제 가능)',
+            '원두 목록 검색이 더 똑똑해졌습니다. (띄어쓰기 포함 검색)',
+            '원두 평점이 시음 기록의 평균 점수로 표시됩니다.',
+            '레시피 상세 화면 디자인과 순서가 개선되었습니다.'
+        ]
+    },
+    {
         version: '1.1.1',
         date: '2026-01-25',
         changes: [

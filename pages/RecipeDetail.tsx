@@ -58,7 +58,7 @@ const RecipeDetail: React.FC = () => {
       {/* 헤더 높이만큼 여백 */}
       <div style={{ height: 'env(safe-area-inset-top, 0px)' }} />
 
-      <div className="w-full aspect-video bg-black">
+      <div className="w-full aspect-video bg-black order-3">
         <iframe
           className="w-full h-full"
           src={youtubeEmbedUrl}
@@ -69,7 +69,7 @@ const RecipeDetail: React.FC = () => {
         />
       </div>
 
-      <div className="px-4 mt-4">
+      <div className="px-4 mt-4 order-1">
         <div className="grid grid-cols-2 bg-surface rounded-xl overflow-hidden border border-white/5">
           <GridItem label="음료 타입" value={recipe.type} />
           <GridItem label="드리퍼" value={recipe.dripper} isRight />
@@ -79,10 +79,32 @@ const RecipeDetail: React.FC = () => {
           <GridItem label="물 온도" value={`${recipe.waterTemp}°C`} isTop isRight />
           <GridItem label="총 원두량" value={`${recipe.beanAmount}g`} isTop />
           <GridItem label="총 물 사용량" value={`${recipe.waterAmount}g`} isTop isRight />
+
+          {/* Advanced Fields - 동적 렌더링을 위한 배열 처리 */}
+          {[
+            recipe.pouringMethod && { label: "푸어링 방식", value: recipe.pouringMethod },
+            recipe.flowRate && { label: "유량", value: `${recipe.flowRate}g/초` },
+            recipe.micron && { label: "분쇄도", value: `${recipe.micron}µm` },
+            recipe.waterInfo && { label: "물 정보", value: recipe.waterInfo }
+          ].filter(Boolean).map((item, index) => (
+            // @ts-ignore
+            <GridItem key={item.label} label={item.label} value={item.value} isTop isRight={index % 2 === 1} />
+          ))}
+
+          {/* 홀수 개일 경우 빈 셀로 채워 보더 마무리를 깔끔하게 (선택사항) */}
+          {[
+            recipe.pouringMethod,
+            recipe.flowRate,
+            recipe.micron,
+            recipe.waterInfo
+          ].filter(Boolean).length % 2 !== 0 && (
+              <div className="p-3 border-t border-white/5 bg-surface"></div>
+            )}
+
         </div>
       </div>
 
-      <div className="px-4 mt-6">
+      <div className="px-4 mt-6 order-2">
         <h3 className="text-lg font-bold text-textMain mb-4">푸어링 단계별 가이드</h3>
         <div className="flex flex-col">
           {recipe.steps.map((step, index) => {

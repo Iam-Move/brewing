@@ -8,12 +8,22 @@ const BeanList: React.FC = () => {
 
   const { beans } = useData();
 
-  const filteredBeans = beans.filter(bean =>
-    bean.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    bean.roastery.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    bean.process.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    ((bean.country || '').toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  const filteredBeans = beans.filter(bean => {
+    if (!searchTerm.trim()) return true;
+    const terms = searchTerm.toLowerCase().split(/\s+/).filter(t => t.length > 0);
+
+    const targetString = `
+          ${bean.name} 
+          ${bean.roastery} 
+          ${bean.process} 
+          ${bean.country || ''} 
+          ${bean.region || ''} 
+          ${bean.farm || ''}
+      `.toLowerCase();
+
+    // Check if EVERY search term is present in the target string
+    return terms.every(term => targetString.includes(term));
+  });
 
   return (
     <div className="flex flex-col min-h-screen bg-background" style={{ paddingBottom: 'calc(80px + env(safe-area-inset-bottom, 0px))' }}>
@@ -54,36 +64,45 @@ const BeanList: React.FC = () => {
       </div>
 
       <div className="flex flex-col gap-4 px-4 mt-2">
-        {filteredBeans.map((bean) => (
-          <div
-            key={bean.id}
-            onClick={() => navigate(`/beans/${bean.id}`)}
-            className="flex bg-surface rounded-xl p-3 gap-4 active:scale-[0.98] transition-transform cursor-pointer"
-          >
-            {bean.imageUrl ? (
-              <div
-                className="w-24 h-24 rounded-lg bg-cover bg-center shrink-0 bg-surfaceLight"
-                style={{ backgroundImage: `url(${bean.imageUrl})` }}
-              />
-            ) : (
-              <div className="w-24 h-24 rounded-lg bg-surfaceLight shrink-0 flex items-center justify-center p-2 text-center">
-                <span className="text-textSub text-xs font-bold leading-tight line-clamp-3">{bean.name}</span>
-              </div>
-            )}
-            <div className="flex flex-col justify-between py-1 flex-1 min-w-0">
-              <h2 className="text-textMain font-bold text-base leading-tight line-clamp-2">{bean.name}</h2>
-              <div className="flex flex-wrap gap-1.5 mt-2">
-                <span className="text-textSub text-xs bg-surfaceLight px-2 py-1 rounded">{bean.roastery}</span>
-                <span className="text-textSub text-xs bg-surfaceLight px-2 py-1 rounded">{bean.country}</span>
-                <span className="text-textSub text-xs bg-surfaceLight px-2 py-1 rounded">{bean.process}</span>
-                <div className="flex items-center gap-1 bg-surfaceLight px-2 py-1 rounded">
-                  <span className="material-symbols-outlined text-primary text-[14px] filled">star</span>
-                  <span className="text-primary text-xs font-bold">{bean.score}</span>
+        {filteredBeans.map((bean) => {
+          // Calculate Average Score
+          let displayScore = bean.score;
+          if (bean.tastingRecords && bean.tastingRecords.length > 0) {
+            const totalScore = bean.tastingRecords.reduce((sum, record) => sum + record.score, 0);
+            displayScore = Number((totalScore / bean.tastingRecords.length).toFixed(2));
+          }
+
+          return (
+            <div
+              key={bean.id}
+              onClick={() => navigate(`/beans/${bean.id}`)}
+              className="flex bg-surface rounded-xl p-3 gap-4 active:scale-[0.98] transition-transform cursor-pointer"
+            >
+              {bean.imageUrl ? (
+                <div
+                  className="w-24 h-24 rounded-lg bg-cover bg-center shrink-0 bg-surfaceLight"
+                  style={{ backgroundImage: `url(${bean.imageUrl})` }}
+                />
+              ) : (
+                <div className="w-24 h-24 rounded-lg bg-surfaceLight shrink-0 flex items-center justify-center p-2 text-center">
+                  <span className="text-textSub text-xs font-bold leading-tight line-clamp-3">{bean.name}</span>
+                </div>
+              )}
+              <div className="flex flex-col justify-between py-1 flex-1 min-w-0">
+                <h2 className="text-textMain font-bold text-base leading-tight line-clamp-2">{bean.name}</h2>
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  <span className="text-textSub text-xs bg-surfaceLight px-2 py-1 rounded">{bean.roastery}</span>
+                  <span className="text-textSub text-xs bg-surfaceLight px-2 py-1 rounded">{bean.country}</span>
+                  <span className="text-textSub text-xs bg-surfaceLight px-2 py-1 rounded">{bean.process}</span>
+                  <div className="flex items-center gap-1 bg-surfaceLight px-2 py-1 rounded">
+                    <span className="material-symbols-outlined text-primary text-[14px] filled">star</span>
+                    <span className="text-primary text-xs font-bold">{displayScore}</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
         {filteredBeans.length === 0 && (
           <div className="text-center text-textSub mt-10">검색 결과가 없습니다.</div>
         )}
