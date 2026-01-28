@@ -96,7 +96,9 @@ const BeanList: React.FC = () => {
                   <span className="text-textSub text-xs bg-surfaceLight px-2 py-1 rounded">{bean.process}</span>
                   <div className="flex items-center gap-1 bg-surfaceLight px-2 py-1 rounded">
                     <span className="material-symbols-outlined text-primary text-[14px] filled">star</span>
-                    <span className="text-primary text-xs font-bold">{displayScore}</span>
+                    <span className="text-primary text-xs font-bold">
+                      {displayScore > 0 ? displayScore : '미입력'}
+                    </span>
                   </div>
                 </div>
               </div>
