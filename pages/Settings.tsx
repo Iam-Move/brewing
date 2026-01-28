@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { storage } from '../utils/storage';
 import PatchNoteList from '../components/PatchNoteList';
 
-const CURRENT_VERSION = '1.2.0';
+const CURRENT_VERSION = '1.2.1';
 
 const Settings: React.FC = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -174,8 +174,14 @@ const Settings: React.FC = () => {
                     </div>
                 </section>
 
-                <div className="text-center text-textSub/30 text-xs mt-10">
-                    BrewNote v{CURRENT_VERSION} {latestVersion ? `(Server: v${latestVersion})` : ''}
+                <div className="text-center space-y-1 mt-10">
+                    <div className="text-textSub/30 text-xs">
+                        BrewNote v{CURRENT_VERSION} {latestVersion ? `(Server: v${latestVersion})` : ''}
+                    </div>
+                    <div className="text-textSub/50 text-[10px] font-medium flex items-center justify-center gap-1">
+                        <span>Made with ☕ by</span>
+                        <span className="text-primary/70 font-bold">IamMove</span>
+                    </div>
                 </div>
             </div>
         </div>
