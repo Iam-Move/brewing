@@ -3,11 +3,10 @@
 > **당신의 커피 라이프를 기록하는 가장 가볍고 안전한 방법**  
 > 서버 없이 내 휴대폰에만 저장되는 '나만의 커피 다이어리'
 
-[![Version](https://img.shields.io/badge/version-v1.0.2-blue?style=for-the-badge&logo=none)](https://brewing.iammove.com)
+[![Version](https://img.shields.io/badge/version-v1.2-blue?style=for-the-badge&logo=none)](https://brewing.iammove.com)
 [![Privacy](https://img.shields.io/badge/Privacy-Local%20Storage-green?style=for-the-badge&logo=guard)](https://brewing.iammove.com)
 [![Serverless](https://img.shields.io/badge/Serverless-100%25-orange?style=for-the-badge&logo=cloudflare)](https://brewing.iammove.com)
-[![License](https://img.shields.io/badge/License-MIT-lightgrey?style=for-the-badge)](https://github.com/kwglo)
-
+[![License](https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge)](https://github.com/Iam-Move/brewing/blob/main/LICENSE)
 <br/>
 
 ## 🔗 접속 주소
@@ -55,4 +54,5 @@ BrewNote는 **서버가 없습니다.** 회원가입도, 로그인도 필요 없
 <br/>
 
 ---
-Designed & Developed by [Kwglo]
+Designed & Developed by [IamMove]
+
