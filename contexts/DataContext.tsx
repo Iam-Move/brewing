@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Bean, Recipe, TastingRecord } from '../types';
 import { storage } from '../utils/storage';
+import { safeDateToISOString } from '../utils/dateUtils';
 
 interface DataContextType {
     beans: Bean[];
@@ -36,7 +37,7 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 const legacyRecord: any = { // Type assertion to avoid import issues if needed, or strict Typing
                     id: `legacy-${bean.id}`,
                     // Use roastDate as default date for legacy records, or today if missing
-                    date: bean.roastDate ? new Date(bean.roastDate).toISOString() : new Date().toISOString(),
+                    date: safeDateToISOString(bean.roastDate),
                     score: bean.score || 0,
                     memo: `${myNotesStr}${bean.memo || ''}`.trim(),
                     tastingNotes: []

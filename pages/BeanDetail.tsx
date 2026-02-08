@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useData } from '../contexts/DataContext';
 import { Bean, TastingRecord } from '../types';
+import { safeParseDateString } from '../utils/dateUtils';
 
 const BeanDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -49,7 +50,7 @@ const BeanDetail: React.FC = () => {
 
     const record: TastingRecord = {
       id: editingRecordId || Date.now().toString(),
-      date: new Date(recordDate).toISOString(),
+      date: safeParseDateString(recordDate).toISOString(),
       score: Number(newScore),
       memo: newMemo,
       tastingNotes: [] // Future proofing
@@ -91,7 +92,7 @@ const BeanDetail: React.FC = () => {
   const hasLegacyData = bean.score > 0 || bean.memo || (bean.myNotes && bean.myNotes.length > 0);
 
   const sortedRecords = [...(bean.tastingRecords || [])].sort((a, b) =>
-    new Date(b.date).getTime() - new Date(a.date).getTime()
+    safeParseDateString(b.date).getTime() - safeParseDateString(a.date).getTime()
   );
 
   return (
@@ -251,7 +252,7 @@ const InfoRow: React.FC<{ label: string; value: string }> = ({ label, value }) =
 );
 
 const RecordCard: React.FC<{ record: TastingRecord; onEdit: () => void; onDelete: () => void }> = ({ record, onEdit, onDelete }) => {
-  const dateStr = new Date(record.date).toLocaleDateString('ko-KR', {
+  const dateStr = safeParseDateString(record.date).toLocaleDateString('ko-KR', {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
